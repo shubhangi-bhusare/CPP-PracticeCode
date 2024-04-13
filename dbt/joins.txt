@@ -1,0 +1,476 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 48
+Server version: 8.0.34 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use iacsd24
+Database changed
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| iacsd0324          |
+| iacsd24            |
+| information_schema |
+| kanchan            |
+| ksnchu             |
+| mysql              |
+| performance_schema |
+| sakila             |
+| student            |
+| sys                |
+| utkarsha           |
+| world              |
++--------------------+
+12 rows in set (0.00 sec)
+
+mysql> select *from emp
+    -> e where (select count(*)from emp m
+    -> where m.sal>3000(e.sal)
+    -> order by sal desc
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(e.sal)
+order by sal desc' at line 3
+mysql> select *from emp
+    -> e where (select count(*)from emp m
+    -> where m.sal>e.sal
+    -> order by sal desc
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> select *from emp
+    -> order by sal desc
+    -> ;
++-------+--------+-----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB       | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+-----------+------+------------+---------+---------+--------+
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7698 | BLAKE  | MANAGER   | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7499 | ALLEN  | SALESMAN  | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7844 | TURNER | SALESMAN  | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
+|  7521 | WARD   | SALESMAN  | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7654 | MARTIN | SALESMAN  | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK     | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
++-------+--------+-----------+------+------------+---------+---------+--------+
+14 rows in set (0.00 sec)
+
+mysql> select *from emp
+    -> order by sal desc
+    -> limit 3
+    -> ;
++-------+-------+-----------+------+------------+---------+------+--------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL     | COMM | DEPTNO |
++-------+-------+-----------+------+------------+---------+------+--------+
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
+|  7902 | FORD  | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
+|  7788 | SCOTT | ANALYST   | 7566 | 1982-12-09 | 3000.00 | NULL |     20 |
++-------+-------+-----------+------+------------+---------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select *from emp where sal>1500;
++-------+-------+-----------+------+------------+---------+--------+--------+
+| EMPNO | ENAME | JOB       | MGR  | HIREDATE   | SAL     | COMM   | DEPTNO |
++-------+-------+-----------+------+------------+---------+--------+--------+
+|  7499 | ALLEN | SALESMAN  | 7698 | 1981-02-20 | 1600.00 | 300.00 |     30 |
+|  7566 | JONES | MANAGER   | 7839 | 1981-04-02 | 2975.00 |   NULL |     20 |
+|  7698 | BLAKE | MANAGER   | 7839 | 1981-05-01 | 2850.00 |   NULL |     30 |
+|  7782 | CLARK | MANAGER   | 7839 | 1981-06-09 | 2450.00 |   NULL |     10 |
+|  7788 | SCOTT | ANALYST   | 7566 | 1982-12-09 | 3000.00 |   NULL |     20 |
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000.00 |   NULL |     10 |
+|  7902 | FORD  | ANALYST   | 7566 | 1981-12-03 | 3000.00 |   NULL |     20 |
++-------+-------+-----------+------+------------+---------+--------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select *from emp e where
+    -> (select count(*)from emp m
+    -> where m.sal>e.sal
+    -> order by sal desc
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> select *from emp e
+    -> where (select count(*)from emp m
+    -> where m.sal>e.sal
+    -> order by sal desc)
+    -> ;
++-------+--------+----------+------+------------+---------+---------+--------+
+| EMPNO | ENAME  | JOB      | MGR  | HIREDATE   | SAL     | COMM    | DEPTNO |
++-------+--------+----------+------+------------+---------+---------+--------+
+|  7369 | SMITH  | CLERK    | 7902 | 1980-12-17 |  800.00 |    NULL |     20 |
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7566 | JONES  | MANAGER  | 7839 | 1981-04-02 | 2975.00 |    NULL |     20 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7698 | BLAKE  | MANAGER  | 7839 | 1981-05-01 | 2850.00 |    NULL |     30 |
+|  7782 | CLARK  | MANAGER  | 7839 | 1981-06-09 | 2450.00 |    NULL |     10 |
+|  7788 | SCOTT  | ANALYST  | 7566 | 1982-12-09 | 3000.00 |    NULL |     20 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
+|  7876 | ADAMS  | CLERK    | 7788 | 1983-01-12 | 1100.00 |    NULL |     20 |
+|  7900 | JAMES  | CLERK    | 7698 | 1981-12-03 |  950.00 |    NULL |     30 |
+|  7902 | FORD   | ANALYST  | 7566 | 1981-12-03 | 3000.00 |    NULL |     20 |
+|  7934 | MILLER | CLERK    | 7782 | 1982-01-23 | 1300.00 |    NULL |     10 |
++-------+--------+----------+------+------------+---------+---------+--------+
+13 rows in set (0.04 sec)
+
+mysql> select e.empno,e.ename,e,deptno,d.deptno,d.dname
+    -> from emp e,dept d
+    -> where e.deptno=e.deptno;
+ERROR 1054 (42S22): Unknown column 'e' in 'field list'
+mysql> select e.empno,e.ename,e.deptno,d.deptno,d.dname
+    -> from emp e,dept d
+    -> where e.dept=e.dept;
+ERROR 1054 (42S22): Unknown column 'e.dept' in 'where clause'
+mysql> select e.empno,e.ename,e.deptno,d.deptno,d.dname
+    -> ffrom emp e,dept d
+    -> where e.deptno=e.deptno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'emp e,dept d
+where e.deptno=e.deptno' at line 2
+mysql> select e.empno,e.ename,e.deptno,d.deptno,d.dname
+    -> from emp e,dept d
+    -> where e.deptno=e.deptno;
++-------+--------+--------+--------+------------+
+| empno | ename  | deptno | deptno | dname      |
++-------+--------+--------+--------+------------+
+|  7934 | MILLER |     10 |     10 | ACCOUNTING |
+|  7902 | FORD   |     20 |     10 | ACCOUNTING |
+|  7900 | JAMES  |     30 |     10 | ACCOUNTING |
+|  7876 | ADAMS  |     20 |     10 | ACCOUNTING |
+|  7844 | TURNER |     30 |     10 | ACCOUNTING |
+|  7839 | KING   |     10 |     10 | ACCOUNTING |
+|  7788 | SCOTT  |     20 |     10 | ACCOUNTING |
+|  7782 | CLARK  |     10 |     10 | ACCOUNTING |
+|  7698 | BLAKE  |     30 |     10 | ACCOUNTING |
+|  7654 | MARTIN |     30 |     10 | ACCOUNTING |
+|  7566 | JONES  |     20 |     10 | ACCOUNTING |
+|  7521 | WARD   |     30 |     10 | ACCOUNTING |
+|  7499 | ALLEN  |     30 |     10 | ACCOUNTING |
+|  7369 | SMITH  |     20 |     10 | ACCOUNTING |
+|  7934 | MILLER |     10 |     20 | RESEARCH   |
+|  7902 | FORD   |     20 |     20 | RESEARCH   |
+|  7900 | JAMES  |     30 |     20 | RESEARCH   |
+|  7876 | ADAMS  |     20 |     20 | RESEARCH   |
+|  7844 | TURNER |     30 |     20 | RESEARCH   |
+|  7839 | KING   |     10 |     20 | RESEARCH   |
+|  7788 | SCOTT  |     20 |     20 | RESEARCH   |
+|  7782 | CLARK  |     10 |     20 | RESEARCH   |
+|  7698 | BLAKE  |     30 |     20 | RESEARCH   |
+|  7654 | MARTIN |     30 |     20 | RESEARCH   |
+|  7566 | JONES  |     20 |     20 | RESEARCH   |
+|  7521 | WARD   |     30 |     20 | RESEARCH   |
+|  7499 | ALLEN  |     30 |     20 | RESEARCH   |
+|  7369 | SMITH  |     20 |     20 | RESEARCH   |
+|  7934 | MILLER |     10 |     30 | SALES      |
+|  7902 | FORD   |     20 |     30 | SALES      |
+|  7900 | JAMES  |     30 |     30 | SALES      |
+|  7876 | ADAMS  |     20 |     30 | SALES      |
+|  7844 | TURNER |     30 |     30 | SALES      |
+|  7839 | KING   |     10 |     30 | SALES      |
+|  7788 | SCOTT  |     20 |     30 | SALES      |
+|  7782 | CLARK  |     10 |     30 | SALES      |
+|  7698 | BLAKE  |     30 |     30 | SALES      |
+|  7654 | MARTIN |     30 |     30 | SALES      |
+|  7566 | JONES  |     20 |     30 | SALES      |
+|  7521 | WARD   |     30 |     30 | SALES      |
+|  7499 | ALLEN  |     30 |     30 | SALES      |
+|  7369 | SMITH  |     20 |     30 | SALES      |
+|  7934 | MILLER |     10 |     40 | OPERATIONS |
+|  7902 | FORD   |     20 |     40 | OPERATIONS |
+|  7900 | JAMES  |     30 |     40 | OPERATIONS |
+|  7876 | ADAMS  |     20 |     40 | OPERATIONS |
+|  7844 | TURNER |     30 |     40 | OPERATIONS |
+|  7839 | KING   |     10 |     40 | OPERATIONS |
+|  7788 | SCOTT  |     20 |     40 | OPERATIONS |
+|  7782 | CLARK  |     10 |     40 | OPERATIONS |
+|  7698 | BLAKE  |     30 |     40 | OPERATIONS |
+|  7654 | MARTIN |     30 |     40 | OPERATIONS |
+|  7566 | JONES  |     20 |     40 | OPERATIONS |
+|  7521 | WARD   |     30 |     40 | OPERATIONS |
+|  7499 | ALLEN  |     30 |     40 | OPERATIONS |
+|  7369 | SMITH  |     20 |     40 | OPERATIONS |
++-------+--------+--------+--------+------------+
+56 rows in set (0.00 sec)
+
+mysql> select e.empno,e.deptno,d.dname
+    -> from emp e,dept d
+    -> where e.deptno=d.deptno;
++-------+--------+------------+
+| empno | deptno | dname      |
++-------+--------+------------+
+|  7369 |     20 | RESEARCH   |
+|  7499 |     30 | SALES      |
+|  7521 |     30 | SALES      |
+|  7566 |     20 | RESEARCH   |
+|  7654 |     30 | SALES      |
+|  7698 |     30 | SALES      |
+|  7782 |     10 | ACCOUNTING |
+|  7788 |     20 | RESEARCH   |
+|  7839 |     10 | ACCOUNTING |
+|  7844 |     30 | SALES      |
+|  7876 |     20 | RESEARCH   |
+|  7900 |     30 | SALES      |
+|  7902 |     20 | RESEARCH   |
+|  7934 |     10 | ACCOUNTING |
++-------+--------+------------+
+14 rows in set (0.00 sec)
+
+mysql> select e.empno,e.ename,e.mgr,m.empno,mgrno,m.ename,managername from emp e
+    -> emp m
+    -> where e.mgr=m.empno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'emp m
+where e.mgr=m.empno' at line 2
+mysql> select e.empno,e.ename,e.mgr,m.empno,mgrno,m.ename,mgrname from emp e
+    -> emp m
+    -> where e.mgr = m.empno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'emp m
+where e.mgr = m.empno' at line 2
+mysql> emp ^C
+mysql> select e.empno,e.ename,e.mgr,m.empno,mgrno,m.ename,mgrname from emp e,
+    ->     emp m
+    ->     where e.mgr = m.empno;
+ERROR 1054 (42S22): Unknown column 'mgrno' in 'field list'
+mysql> select e.empno,e.ename,e.mgr,m.empno mgrno,m.ename mgrname from emp e,
+    ->     emp m
+    ->     where e.mgr = m.empno;
++-------+--------+------+-------+---------+
+| empno | ename  | mgr  | mgrno | mgrname |
++-------+--------+------+-------+---------+
+|  7369 | SMITH  | 7902 |  7902 | FORD    |
+|  7499 | ALLEN  | 7698 |  7698 | BLAKE   |
+|  7521 | WARD   | 7698 |  7698 | BLAKE   |
+|  7566 | JONES  | 7839 |  7839 | KING    |
+|  7654 | MARTIN | 7698 |  7698 | BLAKE   |
+|  7698 | BLAKE  | 7839 |  7839 | KING    |
+|  7782 | CLARK  | 7839 |  7839 | KING    |
+|  7788 | SCOTT  | 7566 |  7566 | JONES   |
+|  7844 | TURNER | 7698 |  7698 | BLAKE   |
+|  7876 | ADAMS  | 7788 |  7788 | SCOTT   |
+|  7900 | JAMES  | 7698 |  7698 | BLAKE   |
+|  7902 | FORD   | 7566 |  7566 | JONES   |
+|  7934 | MILLER | 7782 |  7782 | CLARK   |
++-------+--------+------+-------+---------+
+13 rows in set (0.00 sec)
+
+mysql> select e.empno,e.deptno,d.deptno,d.dname
+    -> from emp e,dept d
+    -> where e.deptno= d.deptno and e.deptno in(10,20);
++-------+--------+--------+------------+
+| empno | deptno | deptno | dname      |
++-------+--------+--------+------------+
+|  7369 |     20 |     20 | RESEARCH   |
+|  7566 |     20 |     20 | RESEARCH   |
+|  7782 |     10 |     10 | ACCOUNTING |
+|  7788 |     20 |     20 | RESEARCH   |
+|  7839 |     10 |     10 | ACCOUNTING |
+|  7876 |     20 |     20 | RESEARCH   |
+|  7902 |     20 |     20 | RESEARCH   |
+|  7934 |     10 |     10 | ACCOUNTING |
++-------+--------+--------+------------+
+8 rows in set (0.03 sec)
+
+mysql> select e.empno,e.deptno,d.dname,d.deptno
+    -> from emp e,dept d
+    -> where e.deptno=d.deptno
+    -> and sal>2000;
++-------+--------+------------+--------+
+| empno | deptno | dname      | deptno |
++-------+--------+------------+--------+
+|  7566 |     20 | RESEARCH   |     20 |
+|  7698 |     30 | SALES      |     30 |
+|  7782 |     10 | ACCOUNTING |     10 |
+|  7788 |     20 | RESEARCH   |     20 |
+|  7839 |     10 | ACCOUNTING |     10 |
+|  7902 |     20 | RESEARCH   |     20 |
++-------+--------+------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select empno,ename,salgrade,losal,hisal
+    -> from emp e,salgrade s
+    -> where sal between losal and hisal;
+ERROR 1054 (42S22): Unknown column 'salgrade' in 'field list'
+mysql> select empno,ename,sal,grade,losal,hisal
+    -> from emp e,sal grade s
+    -> where sal between losal and hisal;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 's
+where sal between losal and hisal' at line 2
+mysql> select e.empno,e.ename,e.mgr,m.empno,m.ename
+    -> from emp e innerjoin emp m on e.mgr = m.empno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'innerjoin emp m on e.mgr = m.empno' at line 2
+mysql> select e empno,e.deptno,d.dname
+    -> from emp e innerjoin dept d on e.deptno=d.deptno
+    -> where sal>2000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'innerjoin dept d on e.deptno=d.deptno
+where sal>2000' at line 2
+mysql> ^C
+mysql> ^C
+mysql> select e.empno,d.deptno,d.dname
+    -> from emp e,deptd
+    -> where e.sal>2000;
+ERROR 1146 (42S02): Table 'iacsd24.deptd' doesn't exist
+mysql> select e.empno,d.deptno,d.dname
+    -> from emp e,deptid
+    -> where e.sal>2000;
+ERROR 1146 (42S02): Table 'iacsd24.deptid' doesn't exist
+mysql> select e.empno,d.deptno,d.dname
+    -> from emp e,dept d
+    -> where e.sal>2000;
++-------+--------+------------+
+| empno | deptno | dname      |
++-------+--------+------------+
+|  7566 |     40 | OPERATIONS |
+|  7566 |     30 | SALES      |
+|  7566 |     20 | RESEARCH   |
+|  7566 |     10 | ACCOUNTING |
+|  7698 |     40 | OPERATIONS |
+|  7698 |     30 | SALES      |
+|  7698 |     20 | RESEARCH   |
+|  7698 |     10 | ACCOUNTING |
+|  7782 |     40 | OPERATIONS |
+|  7782 |     30 | SALES      |
+|  7782 |     20 | RESEARCH   |
+|  7782 |     10 | ACCOUNTING |
+|  7788 |     40 | OPERATIONS |
+|  7788 |     30 | SALES      |
+|  7788 |     20 | RESEARCH   |
+|  7788 |     10 | ACCOUNTING |
+|  7839 |     40 | OPERATIONS |
+|  7839 |     30 | SALES      |
+|  7839 |     20 | RESEARCH   |
+|  7839 |     10 | ACCOUNTING |
+|  7902 |     40 | OPERATIONS |
+|  7902 |     30 | SALES      |
+|  7902 |     20 | RESEARCH   |
+|  7902 |     10 | ACCOUNTING |
++-------+--------+------------+
+24 rows in set (0.00 sec)
+
+mysql> select e.empno,d.deptno,d.dname
+    -> from emp e,dept d
+    -> where e.sal>2000 and e.deptno=d.deptno;
++-------+--------+------------+
+| empno | deptno | dname      |
++-------+--------+------------+
+|  7566 |     20 | RESEARCH   |
+|  7698 |     30 | SALES      |
+|  7782 |     10 | ACCOUNTING |
+|  7788 |     20 | RESEARCH   |
+|  7839 |     10 | ACCOUNTING |
+|  7902 |     20 | RESEARCH   |
++-------+--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select e.empno,d.deptno,d.dname
+    -> from emp e inner join dept d
+    -> on e.deptno=d.deptno where e.sal>2000;
++-------+--------+------------+
+| empno | deptno | dname      |
++-------+--------+------------+
+|  7566 |     20 | RESEARCH   |
+|  7698 |     30 | SALES      |
+|  7782 |     10 | ACCOUNTING |
+|  7788 |     20 | RESEARCH   |
+|  7839 |     10 | ACCOUNTING |
+|  7902 |     20 | RESEARCH   |
++-------+--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select e.empno,d.deptno,d.dname
+    -> from emp e,dept d
+    -> where e.deptno=d.deptno and d.deptno in (10,20);
++-------+--------+------------+
+| empno | deptno | dname      |
++-------+--------+------------+
+|  7369 |     20 | RESEARCH   |
+|  7566 |     20 | RESEARCH   |
+|  7782 |     10 | ACCOUNTING |
+|  7788 |     20 | RESEARCH   |
+|  7839 |     10 | ACCOUNTING |
+|  7876 |     20 | RESEARCH   |
+|  7902 |     20 | RESEARCH   |
+|  7934 |     10 | ACCOUNTING |
++-------+--------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select e.empno,e.ename,d.deptno,d.dname
+    -> from emp e,dept d
+    -> where e.dept=d.dept;
+ERROR 1054 (42S22): Unknown column 'e.dept' in 'where clause'
+mysql> select e.empno,e.ename,d.deptno,d.dname
+    -> from emp e,dept d
+    -> where e.deptno =d.deptno;
++-------+--------+--------+------------+
+| empno | ename  | deptno | dname      |
++-------+--------+--------+------------+
+|  7369 | SMITH  |     20 | RESEARCH   |
+|  7499 | ALLEN  |     30 | SALES      |
+|  7521 | WARD   |     30 | SALES      |
+|  7566 | JONES  |     20 | RESEARCH   |
+|  7654 | MARTIN |     30 | SALES      |
+|  7698 | BLAKE  |     30 | SALES      |
+|  7782 | CLARK  |     10 | ACCOUNTING |
+|  7788 | SCOTT  |     20 | RESEARCH   |
+|  7839 | KING   |     10 | ACCOUNTING |
+|  7844 | TURNER |     30 | SALES      |
+|  7876 | ADAMS  |     20 | RESEARCH   |
+|  7900 | JAMES  |     30 | SALES      |
+|  7902 | FORD   |     20 | RESEARCH   |
+|  7934 | MILLER |     10 | ACCOUNTING |
++-------+--------+--------+------------+
+14 rows in set (0.00 sec)
+
+mysql> select e.empno,e.ename,e.deptno,d.deptno,d.dame
+    -> from emp e,dept d
+    -> where e.deptno=d.deptno
+    -> union
+    -> select e.empno,ename,e.deptno,d.dname
+    -> from emp e and dept d
+    -> where e.deptno=d.deptno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and dept d
+where e.deptno=d.deptno' at line 6
+mysql> select e.empno,e.ename,e.deptno,d.dname,d.deptno
+    -> from emp e left join dept d on e.deptno =d.deptno
+    -> union
+    -> select empno,ename,e.deptno,d.dname
+    -> from emp e right join dept d on e.deptno=d.deptno
+    -> ;
+ERROR 1222 (21000): The used SELECT statements have a different number of columns
+mysql>  select e.empno,e.ename,e.deptno,d.dname,d.deptno
+    ->     from emp e left join dept d on e.deptno =d.deptno
+    ->     union
+    ->     select empno,ename,e.deptno,d.dname,d.deptno
+    ->     from emp e right join dept d on e.deptno=d.deptno
+    ->     ;
++-------+--------+--------+------------+--------+
+| empno | ename  | deptno | dname      | deptno |
++-------+--------+--------+------------+--------+
+|  7369 | SMITH  |     20 | RESEARCH   |     20 |
+|  7499 | ALLEN  |     30 | SALES      |     30 |
+|  7521 | WARD   |     30 | SALES      |     30 |
+|  7566 | JONES  |     20 | RESEARCH   |     20 |
+|  7654 | MARTIN |     30 | SALES      |     30 |
+|  7698 | BLAKE  |     30 | SALES      |     30 |
+|  7782 | CLARK  |     10 | ACCOUNTING |     10 |
+|  7788 | SCOTT  |     20 | RESEARCH   |     20 |
+|  7839 | KING   |     10 | ACCOUNTING |     10 |
+|  7844 | TURNER |     30 | SALES      |     30 |
+|  7876 | ADAMS  |     20 | RESEARCH   |     20 |
+|  7900 | JAMES  |     30 | SALES      |     30 |
+|  7902 | FORD   |     20 | RESEARCH   |     20 |
+|  7934 | MILLER |     10 | ACCOUNTING |     10 |
+|  NULL | NULL   |   NULL | OPERATIONS |     40 |
++-------+--------+--------+------------+--------+
+15 rows in set (0.00 sec)
+
+mysql>
